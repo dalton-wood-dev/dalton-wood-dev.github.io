@@ -1,131 +1,151 @@
-.contact-container {
+.contact-layout {
+  display: grid;
+  grid-template-columns: 0.85fr 1.2fr;
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.contact-intro {
+  color: var(--color-muted);
+  max-width: 27rem;
+}
+
+.contact-lead {
+  color: var(--color-text);
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+  line-height: 1.45;
+}
+
+.contact-links {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: 1200px;
-}
-
-h2 {
-  font-family: 'Manufacturing Consent', sans-serif;
-  font-style: italic;
-  font-weight: 500;
-  font-size: 2.5rem;
-  margin-left: 5%;
-  margin-right: auto;
-
-  span {
-    font-size: 4rem;
-  }
-
-  &::after {
-    content: '';
-    display: block;
-    width: 112%;
-    height: 4px;
-    background-color: #bdff40;
-    transform: skew(-40deg);
-
-    position: relative;
-    left: -8px;
-    top: -8px;
-  }
-}
-
-.contact-section {
-  background-color: #242424;
-  // text-align: center;
-  font-size: 1.2rem;
-  top: -64vh;
-  width: fit-content;
-  padding: 8px 24px;
-}
-
-input,
-textarea {
-  font: inherit;
-  color: inherit;
-  background-color: #414141;
-  border: 0 solid #55731d;
-}
-
-form {
-  display: grid;
-  gap: 1rem;
-}
-
-.error {
-  visibility: hidden;
-  color: #c0392b;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin-top: 2rem;
   font-size: 0.9rem;
 }
 
-input:invalid:not(:focus):not(:placeholder-shown) ~ .error,
-textarea:invalid:not(:focus):not(:placeholder-shown) ~ .error {
-  visibility: visible;
+.contact-links .text-link {
+  width: min(100%, 12rem);
+  justify-content: space-between;
 }
 
-input:invalid:not(:focus):not(:placeholder-shown),
-textarea:invalid:not(:focus):not(:placeholder-shown) {
-  box-shadow: inset 0 0 0 1px #c0392b;
+.social-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
+
+form {
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  min-width: 0;
+}
+
+.form-topline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-topline p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.form-topline > span {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.form-fields {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.honeypot { display: none; }
+.submission-status { color: var(--color-accent); font-size: 0.875rem; }
+.submission-status:empty { display: none; }
+button:disabled { cursor: wait; opacity: 0.65; }
 
 .form-group {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.5rem;
+}
+
+.full-width {
+  grid-column: 1/-1;
 }
 
 label {
-  font-size: 1rem;
-  text-transform: uppercase;
-  margin-bottom: 4px;
+  font-size: 0.75rem;
+}
+
+label > span:not(.optional) {
+  color: var(--color-accent);
+}
+
+.optional {
+  color: var(--color-muted);
+}
+
+input, textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #4a5342;
+  background: #0c0e0b;
+  color: var(--color-text);
+  padding: 0.8rem;
+  border-radius: 2px;
+  font-size: 0.9rem;
 }
 
 input {
+  min-height: 48px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 10rem;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #949e8b;
+  opacity: 1;
+}
+
+input:user-invalid, textarea:user-invalid {
+  border-color: var(--color-error);
+}
+
+.form-note {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  margin-block: 1.25rem;
+}
+
+form .button {
   width: 100%;
 }
 
-.submit {
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  background-color: #bdff40;
-  color: #060606;
-  padding: 0.5rem 2rem;
-  margin: 2rem auto;
-  border: none;
+@media (max-width: 767px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
 }
-
-form:invalid .submit {
-  background-color: #414141;
-  cursor: not-allowed;
-}
-
-.btn-text {
-  font-size: 1.5rem;
-  white-space: nowrap;
-  display: block;
-  position: relative;
-}
-
-form:invalid .btn-text:before {
-  content: none;
-}
-
-.btn-text::before {
-  content: '';
-
-  position: absolute;
-  width: calc(100% + 2rem);
-  height: 1px;
-  background: #060606;
-  top: 90%;
-  left: -1rem;
-  pointer-events: none;
-
-  transform: scale3d(0, 1, 1);
-  transition: transform 0.4s;
-}
-
-.submit:hover .btn-text::before {
-  transform-origin: 50% 100%;
-  transform: scale3d(1, 1, 1);
+@media (max-width: 399px) {
+  .form-fields {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,18 +1,12 @@
-<div #galleryContainer class="gallery-container">
-  <div class="gallery-frame">
-    <h3>The <span>Family</span></h3>
-    <img id="img1" ngSrc="fam.avif" alt="man woman and dog in truck" height="281" width="375" />
+<section class="container" aria-labelledby="gallery-heading">
+  <app-section-heading number="03" title="Outside the editor" headingId="gallery-heading" description="Family, friends, fresh air, and a very good co-pilot.">A.F.K.</app-section-heading>
+  <p class="swipe-hint" id="gallery-hint">Swipe or use the arrow keys to explore the photos <svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></p>
+  <div class="photo-grid" tabindex="0" role="region" aria-label="Personal photos" aria-describedby="gallery-hint">
+    @for (photo of photos; track photo.src) {
+      <figure [class.portrait]="photo.height > photo.width">
+        <img [src]="'photos/' + photo.src.replace('.avif', '-640.webp')" [srcset]="'photos/' + photo.src.replace('.avif', '-320.webp') + ' 320w, photos/' + photo.src.replace('.avif', '-640.webp') + ' 640w'" sizes="(max-width: 599px) 82vw, (max-width: 899px) 45vw, 340px" [alt]="photo.alt" [width]="photo.width" [height]="photo.height" loading="lazy" decoding="async">
+        <figcaption>{{ photo.label }}</figcaption>
+      </figure>
+    }
   </div>
-  <div class="gallery-frame">
-    <h3>The <span>Boys</span></h3>
-    <img id="img2" ngSrc="beach.avif" alt="group on the beach" height="281" width="375" />
-  </div>
-  <div class="gallery-frame">
-    <h3>The <span>Outdoors</span></h3>
-    <img id="img3" ngSrc="mountain2.avif" alt="mountain skyline" height="281" width="375" />
-  </div>
-  <div class="gallery-frame">
-    <h3></h3>
-    <img id="img4" ngSrc="dog2.avif" alt="dog with sunglasses" height="500" width="375" />
-  </div>
-</div>
+</section>

@@ -1,0 +1,7 @@
+<header class="section-heading">
+  <p class="eyebrow"><span class="section-number">{{ number() }}</span> {{ title() }}</p>
+  <h2 class="section-title" [id]="headingId()"><ng-content /></h2>
+  @if (description()) {
+    <p class="section-description">{{ description() }}</p>
+  }
+</header>

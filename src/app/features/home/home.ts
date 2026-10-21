@@ -1,82 +1,19 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Hero } from './hero/hero';
 import { About } from './about/about';
 import { Gallery } from './gallery/gallery';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollSmoother } from 'gsap/ScrollSmoother';
-import { Experience } from './experience/experience';
+import { Projects } from './projects/projects';
 import { Contact } from './contact/contact';
-import { SideNav } from './side-nav/side-nav';
-
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+import { SiteHeader } from './site-header/site-header';
+import { PROFILE } from './portfolio.data';
 
 @Component({
   selector: 'app-home',
-  imports: [Hero, About, Gallery, Experience, Contact, SideNav],
+  imports: [Hero, About, Gallery, Projects, Contact, SiteHeader],
   templateUrl: './home.html',
   styleUrl: './home.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Home implements AfterViewInit {
-  @ViewChild('homeContainer') homeContainer!: ElementRef;
-
-  ngAfterViewInit(): void {
-    const container = this.homeContainer.nativeElement as HTMLElement;
-    const homeEls = gsap.utils.toArray(container.children) as HTMLElement[];
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: 'top 50%',
-        end: 'top 25%',
-        scrub: 1,
-      },
-    });
-
-    tl.to(homeEls[1], {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: homeEls[1],
-        start: 'top 50%',
-        end: 'top 25%',
-        scrub: 1,
-      },
-    });
-    tl.to(homeEls[0], {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: homeEls[1],
-        start: 'top 50%',
-        end: 'top 25%',
-        scrub: 1,
-      },
-    });
-    tl.to(homeEls[2], {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: homeEls[2],
-        start: 'top 50%',
-        end: 'top 25%',
-        scrub: 1,
-      },
-    });
-    tl.to(homeEls[3], {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: homeEls[3],
-        start: 'top 50%',
-        end: 'top 25%',
-        scrub: 1,
-      },
-    });
-    tl.to(homeEls[4], {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: homeEls[4],
-        start: 'top 50%',
-        end: 'top 25%',
-        scrub: 1,
-      },
-    });
-  }
+export class Home {
+  readonly profile = PROFILE;
 }

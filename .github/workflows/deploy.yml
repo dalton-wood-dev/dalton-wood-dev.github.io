@@ -19,6 +19,8 @@ jobs:
         with:
           node-version: 22
       - run: npm ci
+      - run: npm run check
+      - run: npm test -- --watch=false
       - run: npm run build -- --configuration=production --base-href / --deploy-url /
       - name: Create 404.html
         run: |

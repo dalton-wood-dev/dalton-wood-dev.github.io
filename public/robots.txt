@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dalton-wood.dev/sitemap.xml

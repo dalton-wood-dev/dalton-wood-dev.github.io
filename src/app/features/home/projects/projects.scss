@@ -1,0 +1,186 @@
+.projects {
+  display: grid;
+  gap: 3rem;
+}
+
+.project {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--color-line);
+  background: var(--color-panel);
+  min-width: 0;
+}
+
+.project-visual {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-right: 1px solid var(--color-line);
+}
+
+.browser-bar {
+  min-height: 36px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding-inline: 0.8rem;
+  background: #20241c;
+}
+
+.browser-bar > span {
+  width: 5px;
+  height: 5px;
+  background: #727b67;
+  border-radius: 50%;
+}
+
+.browser-bar p {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin: 0 0 0 0.5rem;
+}
+
+.project-visual img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  object-position: top;
+}
+
+figcaption {
+  margin-top: auto;
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+.project-copy {
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.project-copy .eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+
+.project-summary {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.project-contribution {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75rem;
+}
+
+.project-bottom {
+  margin-top: auto;
+}
+
+.project-bottom .text-link {
+  font-size: 0.9rem;
+}
+
+.project-status {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  margin: 0.3rem 0 0;
+}
+
+.workflow-visual {
+  background: radial-gradient(ellipse at top left, #29371b, transparent 70%), #0e110c;
+}
+
+.workflow {
+  flex: 1;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.workflow .eyebrow {
+  color: var(--color-accent);
+  font-size: 0.75rem;
+}
+
+.workflow ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.workflow li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid #49533b;
+  padding-block: 1.1rem;
+  font-size: 1.1rem;
+}
+
+.workflow li:last-child {
+  border-bottom: 1px solid #49533b;
+}
+
+.workflow-number {
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  border: 1px solid #49533b;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.workflow small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 767px) {
+  .workflow { padding: 1.25rem 1.5rem; }
+  .workflow li { padding-block: 0.65rem; }
+  .workflow .eyebrow { margin-bottom: 0.75rem; }
+  .project-visual img { aspect-ratio: 16/9; }
+  .project {
+    grid-template-columns: 1fr;
+  }
+  .project-visual {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .project-copy {
+    padding: 1.5rem;
+  }
+  .projects {
+    gap: 2rem;
+  }
+}

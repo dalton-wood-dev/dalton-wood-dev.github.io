@@ -1,0 +1,51 @@
+const assert=require('node:assert/strict');
+(async()=>{
+ const p=await(await fetch('http://127.0.0.1:9224/json/new?http://localhost:4200',{method:'PUT'})).json();process.env.BROWSER_PAGE_ID=p.id;
+ const b=await require('./browser-client.cjs').connect();
+ try {
+  await b.send('Page.bringToFront');await b.send('Emulation.setFocusEmulationEnabled',{enabled:true});
+  await b.send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+  await b.send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:1});
+  const automatic=await b.send('Page.addScriptToEvaluateOnNewDocument',{source:'DeviceOrientationEvent.requestPermission=undefined'});
+  await b.send('Page.reload');await b.pause(800);
+  await b.evaluate("document.querySelector('.prism-scene').scrollIntoView({block:'center'})");await b.pause(300);
+  assert.equal(await b.evaluate("[...document.querySelectorAll('.face')].every(face => { const fill = getComputedStyle(face).backgroundImage; return !fill.includes('radial-gradient') && !fill.includes('repeating-linear-gradient'); })"), true, 'mobile uses the simpler surface material');
+  const tilt=async(beta,gamma)=>b.evaluate(`window.dispatchEvent(new DeviceOrientationEvent('deviceorientation',{beta:${beta},gamma:${gamma}}))`);
+  const transform=()=>b.evaluate("getComputedStyle(document.querySelector('.prism-rig')).transform");
+  await tilt(35,0);await b.pause(750);const baseline=await transform();
+  await tilt(50,20);await b.pause(750);assert.notEqual(await transform(),baseline,'tilt must move rig');
+  await b.evaluate("document.querySelector('.tilt-control').click()");
+  await tilt(50,20);await b.pause(750);
+  assert.equal(await transform(),baseline,'recenter must restore neutral pose');
+  await tilt(51,21);await b.pause(750);
+  assert.equal(await transform(),baseline,'minor sensor drift must stay centered');
+  const pose=await b.evaluate("(()=>{const m=new DOMMatrix(getComputedStyle(document.querySelector('.prism-rig')).transform);return [m.m41,m.m42]})()");
+  assert.deepEqual(pose,[0,0],'mobile tilt must not translate the rig');
+  await b.evaluate("document.querySelector('.tilt-control').click()");
+  await tilt(80,89);await b.pause(450);
+  await tilt(100,-89);await b.pause(450);
+  assert.equal(await transform(),baseline,'equivalent Euler boundary readings must not jump');
+  await b.evaluate("document.querySelector('.tilt-control').click()");
+  await tilt(179,0);await tilt(-179,0);await b.pause(450);
+  const boundary=await b.evaluate("(()=>{const m=new DOMMatrix(getComputedStyle(document.querySelector('.prism-rig')).transform);return Math.abs(m.m23)})()");
+  assert.ok(boundary<0.01,'beta wrap must not produce a full-range tilt');
+  await b.send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});await b.pause(150);
+  const reduced=await transform();await tilt(10,-20);await b.pause(750);assert.equal(await transform(),reduced,'reduced motion must disable tilt');
+  await b.send('Emulation.setEmulatedMedia',{features:[]});
+  await b.send('Page.removeScriptToEvaluateOnNewDocument',{identifier:automatic.identifier});
+  const stub=await b.send('Page.addScriptToEvaluateOnNewDocument',{source:"DeviceOrientationEvent.requestPermission=async()=> 'granted'"});
+  await b.send('Page.reload');await b.pause(800);
+  assert.equal(await b.evaluate("document.querySelector('.motion-toggle')?.textContent.trim()"),'Enable motion');
+  await b.evaluate("document.querySelector('.motion-toggle').click()");await b.pause(150);
+  assert.equal(await b.evaluate("document.querySelector('.tilt-control').textContent.trim()"),'Center tilt');
+  await b.send('Page.removeScriptToEvaluateOnNewDocument',{identifier:stub.identifier});
+  const denied=await b.send('Page.addScriptToEvaluateOnNewDocument',{source:"DeviceOrientationEvent.requestPermission=async()=> 'denied'"});
+  await b.send('Page.reload');await b.pause(800);
+  await b.evaluate("document.querySelector('.motion-toggle').click()");await b.pause(150);
+  assert.match(await b.evaluate("document.querySelector('.tilt-message').textContent"),/not granted/);
+  await b.send('Page.removeScriptToEvaluateOnNewDocument',{identifier:denied.identifier});
+  console.log('PASS: mobile tilt, reduced motion, permission granted and denied');
+ } finally {
+  await b.send('Emulation.clearDeviceMetricsOverride');await b.send('Emulation.setTouchEmulationEnabled',{enabled:false});await b.send('Emulation.setEmulatedMedia',{features:[]});await b.send('Page.reload');b.close();
+ }
+})().catch(e=>{console.error(e);process.exitCode=1});

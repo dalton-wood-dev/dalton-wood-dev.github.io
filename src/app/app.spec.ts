@@ -14,10 +14,11 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should identify the portfolio owner and role', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, new-portfolio');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Dalton Wood');
+    expect(compiled.textContent).toContain('Software engineering student');
   });
 });

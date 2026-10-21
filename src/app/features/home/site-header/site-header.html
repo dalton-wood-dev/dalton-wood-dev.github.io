@@ -1,0 +1,12 @@
+<header class="site-header">
+  <div class="container header-content">
+    <a class="wordmark" href="#top" aria-label="Dalton Wood, back to top">dw<span>.</span></a>
+    <nav id="sideNav" aria-label="Main navigation">
+      @for (link of links; track link.id) {
+        <a class="nav-link" [href]="'#' + link.id" [attr.aria-current]="activeSection() === link.id ? 'location' : null">{{ link.label }}</a>
+      }
+      <a class="nav-link github-link" [href]="profile.github" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+    <a class="resume-link" [href]="profile.resume" type="application/pdf" target="_blank" rel="noopener noreferrer">Resume <app-download-icon /><span class="visually-hidden"> (PDF, opens in a new tab)</span></a>
+  </div>
+</header>

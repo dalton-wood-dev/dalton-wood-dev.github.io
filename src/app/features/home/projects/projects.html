@@ -1,0 +1,39 @@
+<section class="container" aria-labelledby="projects-heading">
+  <app-section-heading number="01" title="Selected work" headingId="projects-heading" description="Web applications and network tooling built with Angular and Java/Spring Boot.">Selected projects.</app-section-heading>
+  <div class="projects">
+    @for (project of projects; track project.id) {
+      <article class="project" [attr.aria-labelledby]="project.id + '-heading'">
+        <figure class="project-visual" [class.workflow-visual]="!project.image">
+          @if (project.image) {
+            <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span><p>dalton-wood.dev / my-salon</p></div>
+            <img [src]="project.image" [alt]="project.imageAlt || ''" width="1200" height="800" loading="lazy" decoding="async">
+            <figcaption>Captured from the live demo</figcaption>
+          } @else if (project.workflow; as workflow) {
+            <div class="workflow" [attr.aria-label]="workflow.title + ' workflow illustration'">
+              <p class="eyebrow">{{ workflow.title }}</p>
+              <ol>
+                @for (step of workflow.steps; track step.title; let index = $index) {
+                  <li><span class="workflow-number">{{ index + 1 < 10 ? '0' : '' }}{{ index + 1 }}</span><span>{{ step.title }}<small>{{ step.description }}</small></span></li>
+                }
+              </ol>
+            </div>
+            <figcaption>{{ workflow.caption }}</figcaption>
+          }
+        </figure>
+        <div class="project-copy">
+          <p class="eyebrow"><span class="section-number">{{ project.number }}</span> {{ project.category }}</p>
+          <h3 [id]="project.id + '-heading'">{{ project.name }}</h3>
+          <p class="project-summary">{{ project.summary }}</p>
+          <p class="project-contribution">{{ project.contribution }}</p>
+          <ul class="stack-list" aria-label="Technologies">
+            @for (technology of project.stack; track technology) { <li class="tag">{{ technology }}</li> }
+          </ul>
+          <div class="project-bottom">
+            <a class="text-link" [href]="project.href" target="_blank" rel="noopener noreferrer">{{ project.linkLabel }} <svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 19 19 5M5 5h14v14" /></svg></a>
+            <p class="project-status">{{ project.status }}</p>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+</section>

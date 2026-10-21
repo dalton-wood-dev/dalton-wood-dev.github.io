@@ -1,56 +1,39 @@
-.home-container {
+.site-footer {
+  padding-block: 2rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.footer-content {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  position: relative;
-  // top: -64dvh;
-
-  padding: 0 4vw;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  font-size: 0.8rem;
 }
 
-#navApp {
-  display: none;
-  max-height: 0;
-  opacity: 0;
+.footer-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
 }
 
-#aboutApp {
-  opacity: 0;
-  margin-bottom: 10vh;
+.footer-dot {
+  color: var(--color-accent);
 }
 
-#galleryApp {
-  align-self: flex-start;
-  width: 100%;
+.footer-content p {
+  flex: 1;
+  color: var(--color-muted);
+  margin: 0;
+  min-width: 14rem;
 }
 
-#expApp {
-  position: relative;
-  top: 10vh;
-  opacity: 0;
-  margin-bottom: 10vh;
-}
-#contactApp {
-  position: relative;
-  top: 10vh;
-  opacity: 0;
-  margin-bottom: 20vh;
-}
-
-@media (min-width: 900px) {
-  .home-container {
-    padding-left: clamp(240px, 25vw, 320px);
+@media (max-width: 599px) {
+  .footer-content {
+    gap: 1rem 1.5rem;
   }
-
-  #navApp {
-    display: block;
-    position: fixed;
-    left: 4%;
-    top: 25%;
-    transform: translateY(-25%);
-    height: auto;
-    max-height: 80vh;
-    overflow: visible;
-    z-index: 10;
+  .footer-content p {
+    flex-basis: 100%;
+    order: 1;
   }
 }

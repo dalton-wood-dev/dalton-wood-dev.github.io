@@ -1,23 +1,56 @@
-<section #hero class="hero">
-  <div class="scene">
-    <div class="seam-flash" aria-hidden="true"></div>
-
-    <div class="square-prism prism1">
-      <div class="face face0 text top" style="--i: 0">
-        <h1 class="end">Dalton</h1>
+<section class="hero" [class.motion-off]="motionDisabled()" id="top" aria-labelledby="hero-heading">
+  <div class="container hero-layout">
+    <div class="scene-topography" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {{ profile.name }} / Software engineering student</p>
+      <h1 id="hero-heading"><span class="visually-hidden">Dalton Wood — </span>From systems.<br><span>To software.</span></h1>
+      <p class="hero-description">An IT background. A developer's curiosity. I'm building web applications with Angular and Java, and looking for opportunities to put those skills to work.</p>
+      <div class="hero-actions">
+        <a class="button" href="#expApp">Explore my work <svg class="arrow arrow-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 4v16m-6-6 6 6 6-6" /></svg></a>
+        <a class="button button-secondary" [href]="profile.resume" type="application/pdf" target="_blank" rel="noopener noreferrer">Resume (PDF) <app-download-icon /><span class="visually-hidden"> (opens in a new tab)</span></a>
       </div>
-      <div class="face face1" style="--i: 1"></div>
-      <div class="face face2" style="--i: 2"></div>
-      <div class="face face3" style="--i: 3"></div>
+      <p class="availability">Open to internships, volunteer work, and development opportunities.</p>
     </div>
-
-    <div class="square-prism prism2">
-      <div class="face face0 text bottom" style="--i: 0">
-        <h1 class="start">Wood</h1>
+    <div class="prism-area">
+    <div #scene class="prism-scene" aria-hidden="true">
+      <div #rig class="prism-rig">
+        <div class="prism prism-top">
+          @for (face of [0, 1, 2, 3]; track face) {
+            <div class="face" [style.--face]="face">@if (face === 0) { <span>Dalton</span> }</div>
+          }
+        </div>
+        <div class="prism prism-bottom">
+          @for (face of [0, 1, 2, 3]; track face) {
+            <div class="face" [style.--face]="face">@if (face === 0) { <span>Wood</span> }</div>
+          }
+        </div>
+        <div class="seam-plane"><div class="prism-light"></div></div>
       </div>
-      <div class="face face1" style="--i: 1"></div>
-      <div class="face face2" style="--i: 2"></div>
-      <div class="face face3" style="--i: 3"></div>
+      <span class="scene-caption">Always learning. Always building.</span>
+      <span class="scene-coordinate">DW / 01</span>
     </div>
+    @if (reducedMotion() || motionOverride() || motionDisabled() || tiltState() === 'ready' || tiltState() === 'requesting' || tiltState() === 'active') {
+      <div class="motion-choice">
+        @if (reducedMotion() && !motionOverride()) {
+          <p>Motion is reduced. Enable animation and tilt for this page?</p>
+        }
+        <div class="motion-actions">
+          @if (reducedMotion() || motionOverride() || motionDisabled() || tiltState() === 'ready' || tiltState() === 'requesting') {
+            <button class="button motion-toggle" [class.button-secondary]="motionOverride()" type="button" [attr.aria-pressed]="motionOverride()" [disabled]="tiltState() === 'requesting'" (click)="toggleMotion()">{{ tiltState() === 'requesting' ? 'Enabling motion...' : motionOverride() ? 'Disable motion' : 'Enable motion' }}</button>
+          }
+          @if (tiltState() === 'active') {
+            <button class="tilt-control" type="button" (click)="centerTilt()">Center tilt</button>
+          }
+        </div>
+        @if (tiltState() === 'denied') {
+          <p class="tilt-message" role="status">Tilt permission was not granted. The scroll animation is still enabled.</p>
+        }
+      </div>
+    }
+    </div>
+  </div>
+  <div class="container hero-footnote">
+    <span>Angular <span class="footnote-divider">/</span> Java &amp; Spring Boot <span class="footnote-divider">/</span> Systems &amp; networking</span>
+    <a href="#expApp">Selected work below <svg class="arrow arrow-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 4v16m-6-6 6 6 6-6" /></svg></a>
   </div>
 </section>

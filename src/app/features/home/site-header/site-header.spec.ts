@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SideNav } from './side-nav';
+import { SiteHeader } from './site-header';
 
-describe('SideNav', () => {
-  let component: SideNav;
-  let fixture: ComponentFixture<SideNav>;
+describe('SiteHeader', () => {
+  let component: SiteHeader;
+  let fixture: ComponentFixture<SiteHeader>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SideNav]
+      imports: [SiteHeader]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SideNav);
+    fixture = TestBed.createComponent(SiteHeader);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
